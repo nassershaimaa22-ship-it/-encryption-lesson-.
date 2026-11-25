@@ -1,0 +1,284 @@
+!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>تقنيات التشفير والمصادقة | البشمهندسة شيماء ناصر</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=Fira+Code:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-black:#060908; --card-dark:#0d1411; --neon-green:#00ff66;
+      --alert-red:#ff2a4b; --text-light:#e6f5ec; --text-muted:#8fa899;
+      --border-glow:rgba(0,255,102,.35);
+    }
+    *{box-sizing:border-box;margin:0;padding:0;scroll-behavior:smooth}
+    body{background:var(--bg-black);color:var(--text-light);font-family:'Cairo',sans-serif;overflow-x:hidden;line-height:1.8}
+    a{color:var(--neon-green)}
+    .top-banner{background:linear-gradient(90deg,#000,#1a0509,#041f10,#000);border-bottom:2px solid var(--neon-green);padding:10px 15px;text-align:center;font-weight:800;color:var(--neon-green);position:sticky;top:0;z-index:10}
+    .top-banner span{color:var(--alert-red);display:inline-block;margin-right:8px}
+    header{text-align:center;padding:42px 18px;background:radial-gradient(circle at top right,rgba(255,42,75,.18),transparent 45%),radial-gradient(circle at bottom left,rgba(0,255,102,.18),transparent 50%),#080d0b;border-bottom:2px solid var(--alert-red)}
+    .badge{display:inline-block;background:rgba(255,42,75,.15);border:1px solid var(--alert-red);color:var(--alert-red);padding:5px 16px;border-radius:30px;font-weight:700;margin-bottom:12px}
+    h1{font-size:clamp(1.6rem,5vw,2.3rem);color:var(--neon-green);text-shadow:0 0 15px rgba(0,255,102,.4);margin-bottom:10px}
+    header p{max-width:780px;margin:0 auto 18px;color:#cde3d6}
+    .signature-box{display:inline-block;background:rgba(0,0,0,.8);border:1px dashed var(--neon-green);padding:10px 20px;border-radius:12px;color:#fff}
+    .container{max-width:1100px;margin:auto;padding:25px 16px}
+    .section-title{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;border-right:5px solid var(--alert-red);padding:10px 15px;margin:38px 0 18px;background:rgba(13,20,17,.9);border-radius:8px 0 0 8px;gap:8px}
+    .section-title h2{color:var(--neon-green);font-size:1.35rem}
+    .mini-sig{font-size:.82rem;color:var(--alert-red);font-weight:700}
+    .grid-2{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,290px),1fr));gap:18px}
+    .card{background:var(--card-dark);border:1px solid var(--border-glow);border-radius:14px;padding:20px;transition:.2s}
+    .card:hover{transform:translateY(-3px);border-color:var(--neon-green)}
+    .card.red-accent{border-color:rgba(255,42,75,.45)}
+    .term-en{font-family:'Fira Code',monospace;background:rgba(0,255,102,.12);color:var(--neon-green);padding:3px 10px;border-radius:6px;font-size:.85rem;display:inline-block;margin-bottom:8px;direction:ltr}
+    .card h3{font-size:1.2rem;margin-bottom:8px;color:#fff}
+    ul{padding-right:22px}
+    li{margin:5px 0}
+    .note{border-right:4px solid var(--neon-green);background:#0b1710;padding:13px 16px;border-radius:8px;margin:15px 0}
+    .diagram-box{background:#070b09;border:1px solid #1f3329;border-radius:14px;padding:18px;margin:18px 0;text-align:center}
+    .flow{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:10px}
+    .flow span{background:#102219;border:1px solid var(--neon-green);padding:10px 14px;border-radius:10px}
+    .flow b{color:var(--alert-red)}
+    .lab-box{background:linear-gradient(145deg,#0b130f,#14090c);border:2px solid var(--neon-green);border-radius:16px;padding:20px}
+    .lab-controls{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,210px),1fr));gap:13px;margin:15px 0}
+    label{display:block;margin-bottom:6px;font-weight:700}
+    input,select,textarea{width:100%;background:#050807;border:1px solid #2b4738;color:var(--neon-green);padding:11px;border-radius:8px;font:inherit}
+    input:focus,textarea:focus,select:focus{outline:2px solid var(--neon-green)}
+    .btn{background:var(--neon-green);color:#000;border:0;padding:10px 20px;border-radius:8px;font:800 1rem 'Cairo',sans-serif;cursor:pointer}
+    .btn:hover{background:#00cc52}
+    .btn-red{background:var(--alert-red);color:#fff}
+    .cipher-output{background:#030504;border:1px dashed var(--alert-red);padding:14px;border-radius:8px;font-family:'Fira Code',monospace;color:var(--alert-red);word-break:break-word;margin-top:12px;min-height:48px;direction:auto}
+    .quiz-panel{background:var(--card-dark);border:1px solid var(--neon-green);border-radius:14px;padding:20px}
+    .question{padding:13px 0;border-bottom:1px solid #1c2b24}
+    .question p{font-weight:700;margin-bottom:8px}
+    .option{display:block;background:#080d0b;border:1px solid #22382d;padding:8px 12px;border-radius:8px;margin:7px 0;cursor:pointer}
+    .option input{width:auto;margin-left:8px}
+    .result{margin-top:14px;padding:12px;border-radius:9px;display:none}
+    .toc-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:10px}
+    .toc-link{display:block;background:#0d1612;border:1px solid var(--alert-red);color:#fff;text-decoration:none;padding:10px 13px;border-radius:9px;font-weight:700}
+    .toc-link:hover{background:var(--alert-red)}
+    footer{background:#040706;border-top:2px solid var(--neon-green);text-align:center;padding:28px 15px;margin-top:35px;color:var(--text-muted)}
+    @media(max-width:520px){header{padding:30px 14px}.container{padding:18px 12px}.card{padding:16px}.section-title h2{font-size:1.15rem}}
+  </style>
+</head>
+<body>
+  <div class="top-banner">
+    البشمهندسة شيماء ناصر 👩🏼‍💻
+    <span>CYB : Shaimaa Nasser</span>
+  </div>
+
+  <header>
+    <div class="badge">الصف الثاني الثانوي (بكالوريا) • مسار الهندسة وعلوم الحاسب • الجزء الأول</div>
+    <h1>🔐 تقنيات التشفير والمصادقة</h1>
+    <p>منصة تعليمية تفاعلية لفهم حماية البيانات، والتشفير المتماثل وغير المتماثل، ودوال التجزئة، والمصادقة الرقمية.</p>
+    <div class="signature-box">إعداد: البشمهندسة شيماء ناصر</div>
+  </header>
+
+  <main class="container">
+    <section id="contents">
+      <div class="section-title"><h2>📚 محتويات المنصة</h2><span class="mini-sig">اختاري موضوعًا للانتقال إليه</span></div>
+      <nav class="toc-grid">
+        <a class="toc-link" href="#intro">مقدمة عن التشفير</a>
+        <a class="toc-link" href="#types">أنواع التشفير</a>
+        <a class="toc-link" href="#hash">دوال التجزئة</a>
+        <a class="toc-link" href="#auth">المصادقة الرقمية</a>
+        <a class="toc-link" href="#lab">معمل قيصر التعليمي</a>
+        <a class="toc-link" href="#quiz">اختبر معلوماتك</a>
+      </nav>
+    </section>
+
+    <section id="intro">
+      <div class="section-title"><h2>1. ما المقصود بالتشفير؟</h2><span class="mini-sig">Encryption</span></div>
+      <div class="card">
+        <p>التشفير هو تحويل البيانات من نص مفهوم إلى صيغة غير مفهومة باستخدام خوارزمية ومفتاح، بحيث لا يستطيع قراءة البيانات إلا من يمتلك طريقة فك التشفير المناسبة.</p>
+        <div class="note"><strong>الهدف الأساسي:</strong> حماية سرية المعلومات عند تخزينها أو إرسالها، وتقليل فرصة اطلاع غير المصرح لهم عليها.</div>
+        <div class="diagram-box">
+          <div class="flow"><span>النص الأصلي</span><b>←</b><span>خوارزمية + مفتاح</span><b>←</b><span>النص المشفّر</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="types">
+      <div class="section-title"><h2>2. أنواع التشفير</h2><span class="mini-sig">Encryption Types</span></div>
+      <div class="grid-2">
+        <article class="card">
+          <span class="term-en">Symmetric Encryption</span>
+          <h3>التشفير المتماثل</h3>
+          <p>يستخدم المفتاح السري نفسه لتشفير البيانات وفك تشفيرها.</p>
+          <ul>
+            <li>سريع ومناسب لتشفير كميات كبيرة من البيانات.</li>
+            <li>يجب الحفاظ على سرية المفتاح ومشاركته بطريقة آمنة.</li>
+            <li>مثال معروف: AES.</li>
+          </ul>
+        </article>
+        <article class="card red-accent">
+          <span class="term-en">Asymmetric Encryption</span>
+          <h3>التشفير غير المتماثل</h3>
+          <p>يعتمد على زوج من المفاتيح المرتبطة رياضيًا: مفتاح عام ومفتاح خاص.</p>
+          <ul>
+            <li>يمكن مشاركة المفتاح العام مع الآخرين.</li>
+            <li>يجب أن يظل المفتاح الخاص سريًا.</li>
+            <li>يُستخدم في تبادل المفاتيح والتوقيعات الرقمية.</li>
+            <li>مثال معروف: RSA.</li>
+          </ul>
+        </article>
+      </div>
+      <div class="diagram-box">
+        <h3 style="color:var(--neon-green);margin-bottom:12px">الفرق باختصار</h3>
+        <div class="flow"><span>متماثل: مفتاح واحد مشترك</span><b>مقابل</b><span>غير متماثل: مفتاح عام + مفتاح خاص</span></div>
+      </div>
+    </section>
+
+    <section id="hash">
+      <div class="section-title"><h2>3. دوال التجزئة</h2><span class="mini-sig">Hash Functions</span></div>
+      <div class="card">
+        <p>دالة التجزئة تحوّل البيانات إلى قيمة ثابتة الطول تُسمّى Hash أو بصمة رقمية. تُستخدم للمساعدة في التحقق من سلامة البيانات.</p>
+        <ul>
+          <li>الناتج له طول محدد بحسب خوارزمية التجزئة.</li>
+          <li>تغيير بسيط في المدخلات ينتج عادةً بصمة مختلفة.</li>
+          <li>التجزئة ليست تشفيرًا؛ فلا يوجد مفتاح لفكها واستعادة النص الأصلي مباشرةً.</li>
+          <li>من أمثلتها SHA-256.</li>
+        </ul>
+        <div class="note">ملاحظة: تخزين كلمات المرور يحتاج إلى خوارزميات مخصصة وبطيئة مثل Argon2 أو bcrypt مع Salt، وليس استخدام SHA-256 وحده.</div>
+      </div>
+    </section>
+
+    <section id="auth">
+      <div class="section-title"><h2>4. المصادقة الرقمية</h2><span class="mini-sig">Authentication</span></div>
+      <div class="grid-2">
+        <article class="card">
+          <h3>ما هي المصادقة؟</h3>
+          <p>هي عملية التأكد من أن المستخدم أو الجهاز هو بالفعل من يدّعي أنه، قبل السماح له بالوصول إلى حساب أو خدمة.</p>
+        </article>
+        <article class="card">
+          <h3>طرق المصادقة</h3>
+          <ul>
+            <li>شيء تعرفه: كلمة مرور أو رقم سري.</li>
+            <li>شيء تمتلكه: هاتف أو مفتاح أمان.</li>
+            <li>شيء يميزك: بصمة أو خاصية حيوية.</li>
+          </ul>
+        </article>
+        <article class="card red-accent">
+          <h3>المصادقة متعددة العوامل</h3>
+          <p>تجمع بين عاملين مختلفين أو أكثر لزيادة حماية الحساب، مثل كلمة مرور مع رمز تحقق على الهاتف.</p>
+        </article>
+        <article class="card">
+          <h3>التوقيع الرقمي</h3>
+          <p>يساعد في التحقق من هوية صاحب التوقيع والتأكد من عدم تغيير الرسالة بعد توقيعها، باستخدام تقنيات المفاتيح العامة والخاصة.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="lab">
+      <div class="section-title"><h2>5. معمل تفاعلي: شفرة قيصر</h2><span class="mini-sig">تجربة تعليمية بسيطة</span></div>
+      <div class="lab-box">
+        <p>اكتبي نصًا باللغة الإنجليزية وحددي مقدار الإزاحة. هذه تجربة تعليمية لشرح فكرة الاستبدال، وليست وسيلة لحماية معلومات حقيقية.</p>
+        <div class="lab-controls">
+          <div><label for="plainText">النص المراد تشفيره</label><input id="plainText" type="text" placeholder="مثال: HELLO WORLD"></div>
+          <div><label for="shift">مقدار الإزاحة (0 إلى 25)</label><input id="shift" type="number" min="0" max="25" value="3"></div>
+        </div>
+        <button class="btn" id="encryptBtn" type="button">تشفير النص</button>
+        <button class="btn btn-red" id="decryptBtn" type="button">فك التشفير</button>
+        <div class="cipher-output" id="cipherOutput" aria-live="polite">ستظهر النتيجة هنا.</div>
+      </div>
+    </section>
+
+    <section id="quiz">
+      <div class="section-title"><h2>6. اختبر معلوماتك</h2><span class="mini-sig">مراجعة سريعة</span></div>
+      <div class="quiz-panel">
+        <form id="quizForm">
+          <div class="question">
+            <p>1) أي نوع من التشفير يستخدم المفتاح نفسه للتشفير وفك التشفير؟</p>
+            <label class="option"><input type="radio" name="q1" value="a"> التشفير المتماثل</label>
+            <label class="option"><input type="radio" name="q1" value="b"> التشفير غير المتماثل</label>
+            <label class="option"><input type="radio" name="q1" value="c"> دالة التجزئة</label>
+          </div>
+          <div class="question">
+            <p>2) ما المفتاح الذي يجب الحفاظ على سريته في التشفير غير المتماثل؟</p>
+            <label class="option"><input type="radio" name="q2" value="a"> المفتاح العام</label>
+            <label class="option"><input type="radio" name="q2" value="b"> المفتاح الخاص</label>
+            <label class="option"><input type="radio" name="q2" value="c"> لا يوجد مفتاح</label>
+          </div>
+          <div class="question">
+            <p>3) هل يمكن فك دالة التجزئة بالطريقة المعتادة لعكس التشفير؟</p>
+            <label class="option"><input type="radio" name="q3" value="a"> نعم دائمًا</label>
+            <label class="option"><input type="radio" name="q3" value="b"> لا، فهي عملية أحادية الاتجاه عمليًا</label>
+            <label class="option"><input type="radio" name="q3" value="c"> نعم باستخدام المفتاح العام</label>
+          </div>
+          <div class="question">
+            <p>4) ما مثال المصادقة متعددة العوامل؟</p>
+            <label class="option"><input type="radio" name="q4" value="a"> كلمة مرور فقط</label>
+            <label class="option"><input type="radio" name="q4" value="b"> اسم المستخدم فقط</label>
+            <label class="option"><input type="radio" name="q4" value="c"> كلمة مرور ورمز تحقق على الهاتف</label>
+          </div>
+          <button class="btn" type="submit">اعرض النتيجة</button>
+          <button class="btn btn-red" type="reset">إعادة المحاولة</button>
+        </form>
+        <div class="result" id="quizResult" aria-live="polite"></div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>© 2025 منصة تقنيات التشفير والمصادقة</p>
+    <p>إعداد: البشمهندسة شيماء ناصر 👩🏼‍💻</p>
+  </footer>
+
+  <script>
+    const plainText = document.getElementById('plainText');
+    const shiftInput = document.getElementById('shift');
+    const output = document.getElementById('cipherOutput');
+
+    function caesar(text, shift) {
+      return text.replace(/[a-z]/gi, char => {
+        const base = char === char.toUpperCase() ? 65 : 97;
+        return String.fromCharCode((char.charCodeAt(0) - base + shift + 26) % 26 + base);
+      });
+    }
+
+    function getShift() {
+      const value = Number(shiftInput.value);
+      if (!Number.isInteger(value) || value < 0 || value > 25) {
+        output.textContent = 'من فضلك اختاري رقمًا صحيحًا من 0 إلى 25.';
+        return null;
+      }
+      return value;
+    }
+
+    document.getElementById('encryptBtn').addEventListener('click', () => {
+      const shift = getShift();
+      if (shift === null) return;
+      output.textContent = caesar(plainText.value, shift) || 'اكتبي نصًا أولًا.';
+    });
+
+    document.getElementById('decryptBtn').addEventListener('click', () => {
+      const shift = getShift();
+      if (shift === null) return;
+      output.textContent = caesar(plainText.value, -shift) || 'اكتبي نصًا أولًا.';
+    });
+
+    document.getElementById('quizForm').addEventListener('submit', event => {
+      event.preventDefault();
+      const answers = { q1: 'a', q2: 'b', q3: 'b', q4: 'c' };
+      let score = 0;
+      const formData = new FormData(event.target);
+      for (const [question, answer] of Object.entries(answers)) {
+        if (formData.get(question) === answer) score++;
+      }
+      const result = document.getElementById('quizResult');
+      result.style.display = 'block';
+      result.style.background = score >= 3 ? 'rgba(0,255,102,.13)' : 'rgba(255,42,75,.13)';
+      result.style.border = score >= 3 ? '1px solid var(--neon-green)' : '1px solid var(--alert-red)';
+      result.style.color = score >= 3 ? 'var(--neon-green)' : 'var(--alert-red)';
+      result.textContent = `نتيجتك: ${score} من 4. ` + (score >= 3 ? 'ممتاز! أحسنتِ.' : 'راجعي الدروس وحاولي مرة أخرى.');
+    });
+
+    document.getElementById('quizForm').addEventListener('reset', () => {
+      const result = document.getElementById('quizResult');
+      result.style.display = 'none';
+      result.textContent = '';
+    });
+  </script>
+</body>
+</html>
